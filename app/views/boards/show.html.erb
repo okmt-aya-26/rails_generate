@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @board.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @board.body %>
+</p>
+
+<%= link_to 'Edit', edit_board_path(@board) %> |
+<%= link_to 'Back', boards_path %>
+ <!--一覧に戻る時はこのスラッシュの書き方でいい？boards_path？とりあえず保留-->
+ <!--現場railsでは、boards_path的な書き方をしていたので変更する-->
