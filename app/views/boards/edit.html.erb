@@ -1,2 +1,10 @@
-<h1>Boards#edit</h1>
-<p>Find me in app/views/boards/edit.html.erb</p>
+<h1>Editing Board</h1>
+
+<%= render 'form', board: @board %>
+
+<%= link_to 'Show', @board %> |
+<%= link_to 'Back', boards_path %>
+
+<!-- link_to 'Edit', edit_board_path(board)という編集画面へのリンクが、indexに書いてある
+そして(board)という形で引数（？）が渡っているため、直前の投稿が既に入っている！！！ -->
+<!-- 本当にちょっとずつ分かってきて嬉しい（；v；）-->
