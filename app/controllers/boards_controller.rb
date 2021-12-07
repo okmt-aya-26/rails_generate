@@ -28,15 +28,38 @@ class BoardsController < ApplicationController
     # @board = Board.find_by(id: params[:id])
     @board = Board.find(params[:id])
   end
-end
 
-private
-def board_params
-  params.require(:board).permit(:title, :body)
-end
+  def update
+    @board = Board.find(params[:id])
+    if @board.update(board_params)
+     redirect_to @board, notice: "投稿を編集しました"
+    # createの時と一緒、@boardで詳細に飛ぶ
+     else
+    render :edit
+    end
+  end
 
-=begin ↑ストロングパラメーターというやつ
-確か期待する値のみが返ってくるように制限するやつ
-requireメソッドがデータのオブジェクト名を定め、permitメソッドで保存処理のできるキーを指定する。
-これらをあらかじめ設定することで、悪意のあるリクエストがあった際、permitメソッドで許可されていない項目については変更されない。
-=end
+  def destroy
+    @board = Board.find(params[:id])
+    @board.destroy
+    redirect_to boards_url, notice: "投稿を削除しました。"
+  end
+
+  private
+  def board_params
+    params.require(:board).permit(:title, :body)
+  end
+
+  # ↑ストロングパラメーターというやつ。確か期待する値のみが返ってくるように制限するやつだった気がする
+  #【説明】requireメソッドがデータのオブジェクト名を定め、permitメソッドで保存処理のできるキーを指定する。
+  #これらをあらかじめ設定することで、悪意のあるリクエストがあった際、permitメソッドで許可されていない項目については変更されない。
+
+
+  # 最初の内は、とりあえずコントローラの中身を書いて、後から重複している箇所をberfore_actionで精査する感じで良いと思った。
+  # 一気に書こうとする必要はない
+  # only: [:show, :edit, :update, :destroy]これらアクションの実行前に実行されるメソッド。さっきこれ書いていない状態で色々できちゃったけど大丈夫なんだろうか
+
+  # エイリアスやモジュールみたいな役割？find(params[:id])は
+  #複数のアクションで使われるので、あらかじめbefore_actionとして書いておく
+
+end
